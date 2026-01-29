@@ -1,0 +1,12 @@
+[Unit]
+Description=Ping Collector Handler for Mackerel
+Documentation=https://github.com/mackerelio-labs/sabapingd
+After=network.target
+
+[Service]
+Type=notify-reload
+TimeoutStopSec=90
+ExecStart=/usr/bin/sabapingd -config /etc/sabapingd/sabapingd.yaml
+
+[Install]
+WantedBy=multi-user.target

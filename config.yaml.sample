@@ -1,0 +1,10 @@
+x-api-key: xxxxx
+# disk-cache: # save to disk on fail
+#   directory: cache
+#   size: 10MB
+privileged: false
+collector:
+- host-id: xxxxx
+  host: 192.2.0.1 # ip address
+  # custom-identifier: xxxx # can use instead of host-id
+  # average: true # when send a average metric only then true

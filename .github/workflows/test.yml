@@ -1,0 +1,23 @@
+---
+name: test
+
+on:
+  push:
+    branches:
+    - main
+    tags:
+    - v*
+  pull_request:
+env:
+  DEBIAN_FRONTEND: noninteractive
+jobs:
+  lint:
+    uses: mackerelio/workflows/.github/workflows/go-lint.yml@09b7117485bc1a52a8ff736f2759f863bc657fcd # v1.9.0
+    with:
+      os-versions: '["ubuntu-latest"]'
+  test:
+    uses: mackerelio/workflows/.github/workflows/go-test.yml@09b7117485bc1a52a8ff736f2759f863bc657fcd # v1.9.0
+    with:
+      os-versions: '["ubuntu-latest"]'
+      pre: |
+        echo "GOTOOLCHAIN=auto" >> $GITHUB_ENV
