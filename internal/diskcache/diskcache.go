@@ -101,10 +101,12 @@ func (dc *DiskCache) createFile() {
 	wr := gzip.NewWriter(fi)
 	if err = json.NewEncoder(wr).Encode(items); err != nil {
 		slog.Error("failed save diskcache", slog.String("error", err.Error()))
+		fi.Close() // nolint
 		return
 	}
 	if err = wr.Close(); err != nil {
 		slog.Error("failed save diskcache", slog.String("error", err.Error()))
+		fi.Close() // nolint
 		return
 	}
 	if err = fi.Close(); err != nil {

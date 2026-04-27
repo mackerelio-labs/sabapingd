@@ -28,6 +28,7 @@ func diskcacheValidate(ydc *yamlDiskCache) (*DiskCache, error) {
 	if err != nil {
 		return nil, fmt.Errorf("disable disk-cache: %s", err.Error())
 	}
+	defer dot.Close() // nolint
 
 	// ディレクトリが空であれば、エントリ数が0になり、io.EOFを返す
 	entry, err := dot.ReadDir(1)
