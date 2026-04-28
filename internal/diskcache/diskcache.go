@@ -205,8 +205,10 @@ func (dc *DiskCache) Dequeue() (hostid string, metrics []*mackerel.MetricValue, 
 			if err = dc.root.Remove(entry.filename); err != nil {
 				slog.Error("failed remove diskcache", slog.String("filename", entry.filename), slog.String("error", err.Error()))
 			} else {
+				dc.mu.Lock()
 				dc.totalBytes -= entry.bytes
 				dc.totalItems -= entry.items
+				dc.mu.Unlock()
 			}
 		}
 	}
@@ -225,10 +227,10 @@ func (dc *DiskCache) Dequeue() (hostid string, metrics []*mackerel.MetricValue, 
 // ファイルには、制限件数分のデータが格納されている。
 // filelist * 制限件数 + 現在読み込んでいるファイルが元の件数を返す
 func (dc *DiskCache) Len() int {
-	dc.mu.Lock()
-	defer dc.mu.Unlock()
 	dc.fileMu.Lock()
 	defer dc.fileMu.Unlock()
+	dc.mu.Lock()
+	defer dc.mu.Unlock()
 	return dc.totalItems + dc.filequeue.Len()
 }
 
