@@ -30,10 +30,10 @@ nfpms:
       # > A new service type Type=notify-reload is defined.
       deb:
         dependencies:
-          - libsystemd0 (>= 253)
+          - libsystemd0 (>= 247)
       rpm:
         dependencies:
-          - systemd-libs >= 253
+          - systemd-libs >= 247
     formats:
       - rpm
       - deb
