@@ -28,15 +28,17 @@ type Ticker struct {
 	queue       enqueuer
 	collector   collectorIface
 
-	previousPacketLoss float64
+	alwaysSendPacketLoss bool
+	previousPacketLoss   float64
 }
 
 func New(conf *config.CollectorConfig, q enqueuer) *Ticker {
 	return &Ticker{
-		collectorID: conf.CollectorID(),
-		hostID:      conf.HostID,
-		queue:       q,
-		collector:   collector.New(conf),
+		collectorID:          conf.CollectorID(),
+		hostID:               conf.HostID,
+		queue:                q,
+		collector:            collector.New(conf),
+		alwaysSendPacketLoss: conf.AlwaysSendPacketLoss,
 	}
 }
 
@@ -76,7 +78,8 @@ func (t *Ticker) do(ctx context.Context, now time.Time) {
 	}
 
 	// 前回パケットロスがあった場合で、回復した時に 0 を投稿したいため
-	if t.previousPacketLoss > 0 || result.PacketLoss > 0 {
+	// always-send-packetloss が有効な場合は 0 が連続していても毎回投稿する
+	if t.alwaysSendPacketLoss || t.previousPacketLoss > 0 || result.PacketLoss > 0 {
 		queue = append(queue, &mackerel.MetricValue{
 			Name:  "custom.sabapingd.packetLoss.measure", // TODO
 			Time:  now.Unix(),
@@ -99,6 +102,7 @@ func (t *Ticker) Reload(conf *config.CollectorConfig) {
 
 	t.hostID = conf.HostID
 	t.collector = collector.New(conf)
+	t.alwaysSendPacketLoss = conf.AlwaysSendPacketLoss
 }
 
 func (t *Ticker) CollectorID() string {

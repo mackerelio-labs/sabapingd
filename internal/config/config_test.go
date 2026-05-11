@@ -37,8 +37,9 @@ func Test_convert(t *testing.T) {
 				ApiKey: "cat",
 				Collector: []*yamlCollectorConfig{
 					{
-						HostID: "panda",
-						Host:   "192.0.2.1",
+						HostID:               "panda",
+						Host:                 "192.0.2.1",
+						AlwaysSendPacketLoss: true,
 					},
 				},
 			},
@@ -46,8 +47,9 @@ func Test_convert(t *testing.T) {
 				ApiKey: "cat",
 				Collector: []*CollectorConfig{
 					{
-						HostID: "panda",
-						Host:   "192.0.2.1",
+						HostID:               "panda",
+						Host:                 "192.0.2.1",
+						AlwaysSendPacketLoss: true,
 					},
 				},
 			},

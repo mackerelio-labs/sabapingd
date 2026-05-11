@@ -8,3 +8,4 @@ collector:
   host: 192.2.0.1 # ip address
   # custom-identifier: xxxx # can use instead of host-id
   # average: true # when send a average metric only then true
+  # always-send-packetloss: true # send packetloss metric even when 0 continues
