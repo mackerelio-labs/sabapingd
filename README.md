@@ -28,4 +28,5 @@ collector:
   host: 192.2.0.1 # IPアドレス
   # custom-identifier: xxxx # host-id の代わりに利用できます
   # average: true # 平均メトリックのみを送信する場合、true に指定してください
+  # always-send-packetloss: true # packetloss が 0 の状態でも毎回メトリックを投稿します
 ```

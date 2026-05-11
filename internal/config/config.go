@@ -17,8 +17,9 @@ type yamlCollectorConfig struct {
 	CustomIdentifier string `yaml:"custom-identifier"`
 
 	// for ping
-	Host    string `yaml:"host"`
-	Average bool   `yaml:"average"`
+	Host                 string `yaml:"host"`
+	Average              bool   `yaml:"average"`
+	AlwaysSendPacketLoss bool   `yaml:"always-send-packetloss"`
 }
 
 type yamlDiskCache struct {
@@ -39,9 +40,10 @@ type CollectorConfig struct {
 	HostID string
 
 	// for ping
-	Host       string
-	Average    bool
-	Privileged bool
+	Host                 string
+	Average              bool
+	AlwaysSendPacketLoss bool
+	Privileged           bool
 }
 
 func (conf *CollectorConfig) CollectorID() string {

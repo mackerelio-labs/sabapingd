@@ -57,9 +57,10 @@ func convertCollector(ctx context.Context, client mackerelClient, t *yamlCollect
 	c := &CollectorConfig{
 		HostID: t.HostID,
 
-		Host:       t.Host,
-		Average:    t.Average,
-		Privileged: privileged,
+		Host:                 t.Host,
+		Average:              t.Average,
+		AlwaysSendPacketLoss: t.AlwaysSendPacketLoss,
+		Privileged:           privileged,
 	}
 
 	return c, nil
